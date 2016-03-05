@@ -147,6 +147,56 @@
 - (LSCameraPosition)switchCamera;
 
 
+
+
+
+//混音相关部分
+/**
+ *  开始播放混音文件
+ *
+ *  @param musicURL 音频文件地址/文件名
+ *  @param enableLoop 当前音频文件是否单曲循环
+ */
+-(BOOL)startPlayMusic:(NSString*)musicURL withEnableSignleFileLooped:(BOOL)enableLoop;
+/**
+ *  结束播放混音文件，释放播放文件
+ */
+-(BOOL)stopPlayMusic;
+/**
+ *  继续播放混音文件
+ */
+-(BOOL)resumePlayMusic;
+/**
+ *  中断播放混音文件
+ */
+-(BOOL)pausePlayMusic;
+/**
+ *  设置混音强度
+ *  @param value 混音强度范围【1-10】
+ */
+-(void)setMixIntensity:(int )value;
+
+
+
+#ifdef SHOW_MODE
+//滤镜相关部分
+/**
+ *  设置滤镜类型
+ *  
+ *  @param filterType 滤镜类型，目前支持7种滤镜，参考 GPUImageFilterType 描述
+ *
+ */
+-(void)setFilterType:(LSGpuImageFilterType)filterType;
+/**
+ *  设置滤镜强度
+ *
+ *   @param value 滤镜强度设置
+ *
+ *    注意： 对于不同滤镜类型，可调节强度不同
+ */
+-(void)setFilterIntensity:(float)value;
+#endif
+
 /**
  *  设置统计参数频率
  *
@@ -180,7 +230,6 @@
  *
  */
 -(NSString*) getSDKVersionID;
-
 
 @end
 

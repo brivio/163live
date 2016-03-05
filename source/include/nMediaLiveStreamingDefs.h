@@ -8,7 +8,24 @@
 
 #ifndef livestream_nMediaLiveStreamingDefs_h
 #define livestream_nMediaLiveStreamingDefs_h
-/*!\file*/
+#define SHOW_MODE //!< 秀场模式，如果不是秀场模式.
+
+
+typedef enum LSGpuImageFilterType{
+    LS_GPUIMAGE_NORMAL,        //!< 无滤镜.
+    LS_GPUIMAGE_BEAUTY,        //!< 美白滤镜.
+    LS_GPUIMAGE_CONTRAST,      //!< 对比度增强.
+    LS_GPUIMAGE_TONECURVE,     //!< tonecurve
+    LS_GPUIMAGE_SEPIA,         //!< sepia.
+    LS_GPUIMAGE_AMATORKA,      //!< amatorka.
+    LS_GPUIMAGE_MISSETIKATE,   //!< missetikate.
+    LS_GPUIMAGE_SOFTELEGANCE,  //!< 柔和.
+    LS_GPUIMAGE_ZIRAN,         //!< 自然.
+    LS_GPUIMAGE_MEIYAN1,       //!< 第一种美颜效果
+    LS_GPUIMAGE_MEIYAN2,       //!< 第二种美颜效果
+} LSGpuImageFilterType;
+
+
 //直播推流采集参数
 typedef enum LSVideoCodecType{
     
@@ -179,7 +196,7 @@ typedef enum LSErrorCode{
     LS_ERR_VIDEO_RELEASE,
     LS_ERR_TRAILER,
     LS_ERR_OUT_MEDIA_FILEHEADER_WRONG,
-    LS_ERR_TIME_OUT,
+    LS_ERR_HEADER_WAITING,
     LS_ERR_URL_INVALUE,
     LS_ERR_TO_STOP_LIVESTREAMING,
     LS_ERR_AVSYNC_TIME_OUT
