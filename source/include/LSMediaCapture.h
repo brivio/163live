@@ -11,6 +11,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import "nMediaLiveStreamingDefs.h"
 
+// 直播中的NSNotificationCenter消息广播
+#define LS_LiveStreaming_Started    @"LSLiveStreamingStarted" // 直播推流已经开始
+#define LS_LiveStreaming_Finished   @"LSLiveStreamingFinished" // 直播推流已经结束
+
 ///直播类LSMediacapture，用于推流
 @interface LSMediaCapture : NSObject
 
@@ -223,7 +227,7 @@
  *  @param  trace的输出回调
  */
 
--(void)setTraceCallBack:(void(^)(void * ctx, const char * kpFmt,va_list* va)) traceCallBackBlock;
+//-(void)setTraceCallBack:(void(^)(void* ctx, int level, const char* string)) traceCallBackBlock;
 
 /**
  *  获取当前sdk的版本号

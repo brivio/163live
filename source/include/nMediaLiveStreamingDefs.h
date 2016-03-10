@@ -12,6 +12,7 @@
 
 
 typedef enum LSGpuImageFilterType{
+    
     LS_GPUIMAGE_NORMAL,        //!< 无滤镜.
     LS_GPUIMAGE_BEAUTY,        //!< 美白滤镜.
     LS_GPUIMAGE_CONTRAST,      //!< 对比度增强.
@@ -23,6 +24,7 @@ typedef enum LSGpuImageFilterType{
     LS_GPUIMAGE_ZIRAN,         //!< 自然.
     LS_GPUIMAGE_MEIYAN1,       //!< 第一种美颜效果
     LS_GPUIMAGE_MEIYAN2,       //!< 第二种美颜效果
+
 } LSGpuImageFilterType;
 
 
@@ -58,9 +60,12 @@ typedef enum LSCameraOrientation{
  *  直播视频流质量
  */
 typedef enum LSVideoStreamingQuality{
-    LS_VIDEO_QUALITY_LOW,     //!< 视频分辨率：低清.ÍÍÍ
-    LS_VIDEO_QUALITY_MEDIUM,  //!< 视频分辨率：标清.
-    LS_VIDEO_QUALITY_HIGH,    //!< 视频分辨率：高清.
+    
+    LS_VIDEO_QUALITY_LOW,     //!< 视频分辨率：低清 352*288.
+    LS_VIDEO_QUALITY_MEDIUM,  //!< 视频分辨率：标清 480*360.
+    LS_VIDEO_QUALITY_HIGH,    //!< 视频分辨率：高清 640*480.
+    LS_VIDEO_QUALITY_SUPER,   //!< 视频分辨率：高清 960*540.
+
 }LSVideoStreamingQuality ;
 
 typedef enum LSCameraPosition{
@@ -80,7 +85,8 @@ typedef struct LSVideoParaCtx
     LSVideoStreamingQuality videoStreamingQuality;  //!< 视频分辨率.
     LSCameraPosition cameraPosition;                  //!< 视频采集前后摄像头.
     LSCameraOrientation interfaceOrientation;         //!< 视频采集方向.
-    
+    LSGpuImageFilterType filterType; //!< 滤镜类型
+
 } LSVideoParaCtx;
 
 
