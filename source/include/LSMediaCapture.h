@@ -14,6 +14,10 @@
 // 直播中的NSNotificationCenter消息广播
 #define LS_LiveStreaming_Started    @"LSLiveStreamingStarted" // 直播推流已经开始
 #define LS_LiveStreaming_Finished   @"LSLiveStreamingFinished" // 直播推流已经结束
+#define LS_LiveStreaming_Bad        @"LSLiveStreamingBad" // 直播推流状况不好，建议降低分辨率
+#define LS_AudioFile_eof            @"LSAudioFileEof" //当前audio文件播放结束
+#define LS_LiveStreaming_SDK_dealloc            @"LSMediaCaptureSdkDealloc" //当前audio文件播放结束
+
 
 ///直播类LSMediacapture，用于推流
 @interface LSMediaCapture : NSObject
@@ -72,6 +76,25 @@
 -(void)resumeVideoPreview;
 
 /**
+ *
+ *  推流地址
+ *
+ */
+@property(nonatomic,copy)NSString* pushUrl;
+
+/**
+ *  直播推流之前，可以再次设置一下视频参数
+ *  @param  videoResolution 采集分辨率
+ *  @param  bitrate 推流码率 default会按照分辨率设置
+ *  @param  fps     采集帧率 default ＝ 15
+ *
+ */
+-(void)setVideoParameters:(LSVideoStreamingQuality)videoResolution
+                  bitrate:(int)bitrate
+                      fps:(int)fps
+        cameraOrientation:(LSCameraOrientation) cameraOrientation;
+
+/**
  *  开始直播
  *
  *  @param outError 具体错误信息
@@ -85,60 +108,27 @@
 - (BOOL)stopLiveStream;
 
 /**
- *  中断推流，但不释放资源，推流url不切换，状态保持
- */
-- (BOOL)pauseLiveStream;
-
-/**
- *  继续推流
- */
-- (BOOL)resumeLiveStream;
-
-/**
- *  开始视频推流，
- *  @warning 需要先启动推流startLiveStreamWithError，开启视频或者音视频推流，才可以关闭视频推流，打开视频推流，
- */
-- (void)startVideoLiveStream;
-
-/**
- *  结束视频推流，
- *  @warning 需要先启动推流startLiveStreamWithError，开启视频或者音视频推流，才可以关闭视频推流，打开视频推流，
- */
-- (void)stopVideoLiveStream;
-
-/**
- *  重启开始视频推流 
- *  @warning 需要先启动推流startLiveStreamWithError，开启视频或者音视频推流，才可以中断视频推流，重启视频推流，
+ *  重启开始视频推流
+ *  @warning 需要先启动推流startLiveStreamWithError，开启音视频推流，才可以中断视频推流，重启视频推流，
  */
 - (void)resumeVideoLiveStream;
 
 /**
- *  中断视频推流 
- *  @warning 需要先启动推流startLiveStreamWithError，开启视频或者音视频推流，才可以中断视频推流，重启视频推流，
+ *  中断视频推流
+ *  @warning 需要先启动推流startLiveStreamWithError，开启音视频推流，才可以中断视频推流，重启视频推流，
  */
 - (void)pauseVideoLiveStream;
 
-/**
- *  开始音频推流，
- *  @warning 需要先启动推流startLiveStreamWithError，开启音频或者音视频推流，才可以关闭音频推流，打开音频推流，
- */
-- (BOOL)startAudioLiveStream;
-
-/**
- *  结束音频推流，
- *  @warning：需要先启动推流startLiveStreamWithError，开启音频或者音视频推流，才可以关闭音频推流，打开音频推流，
- */
-- (BOOL)stopAudioLiveStream;
 
 /**
  *  重启音频推流，
- *  @warning：需要先启动推流startLiveStreamWithError，开启音频或者音视频推流，才可以中断音频推流，重启音频推流，
+ *  @warning：需要先启动推流startLiveStreamWithError，开启音视频推流，才可以中断音频推流，重启音频推流，
  */
 - (BOOL)resumeAudioLiveStream;
 
 /**
  *  中断音频推流，
- *  @warning：需要先启动推流startLiveStreamWithError，开启音频或者音视频推流，才可以中断音频推流，重启音频推流，
+ *  @warning：需要先启动推流startLiveStreamWithError，开启音视频推流，才可以中断音频推流，重启音频推流，
  */
 - (BOOL)pauseAudioLiveStream;
 
@@ -149,9 +139,6 @@
  *  @return 当前摄像头的位置，前或者后
  */
 - (LSCameraPosition)switchCamera;
-
-
-
 
 
 //混音相关部分
@@ -180,13 +167,11 @@
  */
 -(void)setMixIntensity:(int )value;
 
-
-
 #ifdef SHOW_MODE
 //滤镜相关部分
 /**
  *  设置滤镜类型
- *  
+ *
  *  @param filterType 滤镜类型，目前支持7种滤镜，参考 GPUImageFilterType 描述
  *
  */
@@ -211,7 +196,7 @@
 /**
  *  得到直播过程中的统计信息
  *
- *  @param statistics 统计信息结构体 
+ *  @param statistics 统计信息结构体
  *
  */
 -(BOOL)getStatisticInfo:(LSStatistics*)statistics;
@@ -221,14 +206,6 @@
  *  @param loglevl trace 信息的级别
  */
 -(void)setTraceLevel:(LSMediaLog)logLevel;
-/**
- *  设置trace 的callback
- *
- *  @param  trace的输出回调
- */
-
-//-(void)setTraceCallBack:(void(^)(void* ctx, int level, const char* string)) traceCallBackBlock;
-
 /**
  *  获取当前sdk的版本号
  *

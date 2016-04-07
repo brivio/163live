@@ -74,6 +74,13 @@ typedef enum LSCameraPosition{
     
 } LSCameraPosition;
 
+//视频显示模式
+typedef enum LSVideoRenderScaleMode{
+    LS_VIDEO_RENDER_MODE_SCALE_NONE, //!< 采集多大分辨率，则显示多大分辨率
+    LS_VIDEO_RENDER_MODE_SCALE_16x9, //!< 无论采集多大分辨率，显示比例为16:9
+    
+}LSVideoRenderScaleMode;
+
 /**
  *  直播推流视频参数
  */
@@ -85,6 +92,7 @@ typedef struct LSVideoParaCtx
     LSVideoStreamingQuality videoStreamingQuality;  //!< 视频分辨率.
     LSCameraPosition cameraPosition;                  //!< 视频采集前后摄像头.
     LSCameraOrientation interfaceOrientation;         //!< 视频采集方向.
+    LSVideoRenderScaleMode videoRenderMode;           //!< 视频显示端比例16:9
     LSGpuImageFilterType filterType; //!< 滤镜类型
 
 } LSVideoParaCtx;
